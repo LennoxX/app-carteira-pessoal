@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "app-carteira-pessoal",
+      "public": "dist/app-carteira-pessoal",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

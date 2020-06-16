@@ -1,0 +1,62 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Composição da Carteira</h1>
+      </div>
+
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+          <li class="breadcrumb-item active">Minhas Posições</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card card-outline card-corDefault">
+    <div class="card-header h4">
+     Minhas Posições
+      <a routerLink="posicao/new" class="btn btn-sm btn-success float-right">Nova Posição</a>
+    </div>
+    <div class="card-body">
+      <p-table [value]="carteira?.posicoes">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="col-sm-6">Ativo</th>
+            <th class="col-sm-2">Valor Médio de Compra</th>
+            <th class="col-sm-2">Quantidade</th>
+            <th class="col-sm-2">Tipo</th>
+            <th class="col-sm-2">Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-posicao>
+          <tr>
+            <td>{{posicao?.ativo.nome}}</td>
+            <td>{{posicao?.valorMedioCompra | currency: 'BRL'}}</td>
+            <td>{{posicao?.quantidade}}</td>
+            <td>{{posicao?.ativo.tipo.label}}</td>
+            <td class="col-sm-2" style="text-align: center">
+              <a pTooltip="Editar Ativo" tooltipPosition="top" [routerLink]="['posicao',posicao.id, 'edit']"
+                class="btn btn-info btn-sm mr-2"><i class="fa fa-pencil-alt"></i></a>
+              <a pTooltip="Excluir Ativo" tooltipPosition="top" [routerLink]="[posicao.id]"
+                class="btn btn-danger btn-sm mr-2"><i class="fa fa-trash"></i></a>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div *ngIf="carteira?.posicoes.length == 0">
+            Sua carteira está vazia
+          </div>
+        </ng-template>
+
+      </p-table>
+
+    </div>
+    <div class="overlay" *ngIf="loading">
+      <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+    </div>
+  </div>
+</div>

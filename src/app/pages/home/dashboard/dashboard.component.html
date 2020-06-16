@@ -1,0 +1,177 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Dashboard</h1>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card card-outline card-corDefault overflow-auto" style="max-height: 330px;">
+    <div class="card-header h4">Resultados da Carteira
+      <div class="card-tools">
+
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+
+
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div *ngFor="let card of cards" class="col-sm-3">
+          <div class="info-box">
+         <!--    <span class="info-box-icon"
+              [ngClass]="card?.variacaoRel.startsWith('-') ? 'bg-gradient-danger': 'bg-gradient-success'">
+
+              <i [ngClass]="card?.variacaoRel.startsWith('-') ? 'fa fa-arrow-down' : 'fa fa-arrow-up'"></i></span> -->
+
+            <div class="info-box-content">
+
+              <div class="row d-flex">
+                <div class="col-sm-8">
+                  <span class="info-box-text h4">{{card?.sigla}}</span>
+                </div>
+                <div class="col-sm-4 d-flex justify-content-end font-weight-bold">
+                  <span>R${{card.atual}}</span> <span [ngClass]="card?.variacaoRel.startsWith('-') ? 'text-danger' : 'text-success'">&nbsp;({{card.variacaoRel.startsWith('-') ? card.variacaoRel : '+'+ card.variacaoRel}})</span>
+                </div>
+              </div>
+              <br/>
+              <div class="row" style="font-size: 15px;">
+                <div class="col-sm-3">
+                  Min.<br />
+                  <span class="info-box-text text" >R$ {{card?.minima}}</span>
+                </div>
+                <div class="col-sm-3">
+                  Máx.<br />
+                  <span class="info-box-text text" >R$ {{card?.maxima}}</span>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-end">
+                  <span class="info-box-text">Atualizado em:<br/>{{card?.diaHora}}</span>
+                </div>
+
+              </div>
+
+
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="overlay" *ngIf="loading">
+      <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 d-flex ">
+      <div class="card card-outline card-corDefault flex-fill">
+        <div class="card-header h4">Posição Atual
+          <!--   <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div> -->
+        </div>
+        <div style="min-height: 400px;" *ngIf="chartReady" class="card-body chart">
+          <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+            [options]="pieChartOptions" [legend]="pieChartLegend">
+          </canvas>
+        </div>
+        <div class="overlay" *ngIf="loading">
+          <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASO QUEIRA DEIXAR OS QUADROS COM A MESMA ALTURA, ADICIONAR 'd-flex' NAS COLUNAS-->
+    <div class="col-sm-6 d-flex">
+      <div class="card card-outline card-corDefault flex-fill">
+        <div class="card-header h4">Desempenho
+          <!--     <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div> -->
+        </div>
+
+        <div class="card-body">
+          <p-table [value]="variacao" [paginator]="true" [rows]="5" [totalRecords]="variacao.length">
+            <ng-template pTemplate="header">
+              <tr class="d-flex">
+                <th [pSortableColumn]="'ativo'" class="col-sm-3">Ativo
+                  <p-sortIcon [field]="'ativo'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'valorCompra'" class="col-sm-3">Valor Compra
+                  <p-sortIcon [field]="'valorCompra'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'valorAtual'" class="col-sm-3">Valor Atual
+                  <p-sortIcon [field]="'valorAtual'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'balanco'" class="col-sm-3">Variação (%)
+                  <p-sortIcon [field]="'balanco'"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr class="d-flex">
+                <td class="col-sm-3">{{item.ativo | uppercase}}</td>
+                <td class="col-sm-3">{{item.valorCompra | currency: 'BRL'}}</td>
+                <td class="col-sm-3">{{item.valorAtual | currency: 'BRL'}}</td>
+                <td class="col-sm-3" [ngClass]="[item.balanco < 0 ? 'text-danger'  :'text-success']">
+                  R$ {{item.balanco}} {{'('+(getPercent(item))+'%)'}}</td>
+
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="row mt-5">
+            <div class="col-sm-4">
+              <div class="info-box">
+                <span class="info-box-icon bg-gradient-blue"><i class="fas fa-file-invoice-dollar"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Custo da Carteira</span>
+                  <span class="info-box-number">{{totalCompra | currency: 'BRL'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="info-box">
+                <span class="info-box-icon bg-gradient-warning"><i class="far fa-calendar-alt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Valor da Carteira</span>
+                  <span class="info-box-number">{{totalAtual | currency:'BRL'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="info-box">
+                <span class="info-box-icon bg-gradient"
+                  [ngClass]="[variacaoTotal > 0 ? 'bg-gradient-sucess' : 'bg-gradient-danger']"><i
+                    class="fa fa-chart-line"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Resultado</span>
+                  <span [ngClass]="[variacaoTotal > 0 ? 'text-success' : 'text-danger']" class="info-box-number">
+                    {{variacaoTotal | currency:'BRL'}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--   <p>Total de Compra: </p>
+          <p> Total Atual: </p>
+          <p >Variação:
+           ></p> -->
+        </div>
+        <div class="overlay" *ngIf="loading">
+          <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.corDefault {
+  background-color: #ac54d1 !important;
+}
+
+.sidebar-dark-corDefault .nav-sidebar.nav-legacy>.nav-item>.nav-link.active, .sidebar-light-corDefault .nav-sidebar.nav-legacy>.nav-item>.nav-link.active {
+  border-color: #ac54d1 !important;
+  background-color: #a6a4a2 !important;
+}
+
+
+.card-corDefault.card-outline {
+  border-top: 3px solid #ac54d1 !important;
+}
+
+
+.sidebar-dark-corDefault  {
+  background-color: #737272 !important;
+}
+
+
+[class*=sidebar-dark] .user-panel {
+  border-bottom: 1px solid #a6a4a2 !important;
+}
+
+[class*=sidebar-dark] .brand-link {
+   border-bottom: 1px solid #a6a4a2 !important;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: #ac54d1 !important;
+  color: #ffffff;
+}
+
+
+body a:active {
+  background-color: #ac54d1 !important;
+  text-decoration: none;
+}

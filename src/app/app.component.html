@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+  <title>AdminLTE 3 | Starter</title>
+
+</head>
+
+<body class="sidebar-mini layout-fixed layout-navbar-fixed " style="height: auto;">
+  <div class="wrapper">
+    <div *ngIf="showComponents">
+      <app-header></app-header>
+      <app-menu></app-menu>
+    </div>
+
+    <div [ngClass]="{'content-wrapper': showComponents }">
+      <div [ngClass]="{'content': showComponents }">
+        <div [ngClass]="{'container-fluid': showComponents }">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+      <!--  <app-breadcrumb [items]="[{text: '123', link: '/'},{text: '456', link: '/'}]" [pageHeader]="'AAAAAAAAAAAA'"></app-breadcrumb> -->
+
+    </div>
+    <div *ngIf="showComponents">
+      <app-footer></app-footer>
+    </div>
+  </div>
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+</body>
+
+</html>

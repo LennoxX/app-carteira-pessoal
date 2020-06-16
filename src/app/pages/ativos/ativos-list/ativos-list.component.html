@@ -1,0 +1,52 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Ativos</h1>
+      </div>
+
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+          <li class="breadcrumb-item active">Ativos</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card card-outline card-corDefault">
+    <div class="card-header h4">Ativos Cadastrados
+      <a routerLink="new" class="btn btn-success btn-sm float-right">Adicionar</a>
+    </div>
+    <div class="card-body">
+      <p-table [value]="ativos">
+        <ng-template pTemplate="header">
+          <tr class="d-flex">
+            <th class="col-sm-4">Nome</th>
+            <th class="col-sm-4">Sigla</th>
+            <th class="col-sm-2">Tipo</th>
+            <th class="col-sm-2">Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ativo>
+          <tr class="d-flex">
+            <td class="col-sm-4">{{ativo.nome | titlecase}}</td>
+            <td class="col-sm-4">{{ativo.sigla | uppercase}}</td>
+            <td class="col-sm-2">{{ativo.tipo.label | uppercase}}</td>
+            <td class="col-sm-2" style="text-align: center">
+              <a pTooltip="Editar Ativo" tooltipPosition="top" [routerLink]="[ativo.id, 'edit']"
+                class="btn btn-info btn-sm mr-2"><i class="fa fa-pencil-alt"></i></a>
+              <button pTooltip="Excluir Ativo" tooltipPosition="top" (click)="excluirAtivo(ativo.id)"
+                class="btn btn-danger btn-sm mr-2"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="overlay" *ngIf="loading">
+      <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+    </div>
+  </div>
+</div>

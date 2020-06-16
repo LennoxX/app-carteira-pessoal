@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "app-carteira": {
+      "hosting": {
+        "app-carteira-pessoal": [
+          "app-carteira"
+        ]
+      }
+    }
+  }
+}

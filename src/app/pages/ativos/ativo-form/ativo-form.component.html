@@ -1,0 +1,75 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Ativos</h1>
+      </div>
+
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+          <li class="breadcrumb-item active"><a routerLink="/ativos">Ativos</a></li>
+          <li class="breadcrumb-item active">{{pageTitle}}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card card-outline card-corDefault">
+    <div class="card-header h4">{{pageTitle}}
+
+    </div>
+    <div class="card-body">
+      <form [formGroup]="resourceForm">
+        <div class="row">
+
+          <div class="form-group col-sm-4">
+            Nome do Ativo*: <br />
+            <input class="form-control" placeholder="Ex.: Itaúsa" type=text formControlName="nome" id="nome"
+              [ngClass]="{'is-invalid': resourceForm.controls.nome.invalid && resourceForm.controls.nome.touched}"
+              required />
+
+            <div class="error invalid-feedback"
+              [hidden]="!(resourceForm.controls.nome.errors?.required && resourceForm.controls.nome.touched)">
+              Campo 'Nome'
+              Obrigatório</div>
+            <div class="error invalid-feedback"
+              [hidden]="!(resourceForm.controls.nome.errors?.minlength && resourceForm.controls.nome.touched)">
+              No mínimo 4 dígitos</div>
+
+          </div>
+
+          <div class="form-group col-sm-4">
+            Sigla do Ativo*: <br />
+            <input class="form-control" placeholder="Ex.: ITSA4" type=text formControlName="sigla" id="sigla"
+              [ngClass]="{'is-invalid': resourceForm.controls.sigla.invalid && resourceForm.controls.sigla.touched}"
+              required />
+
+            <div class="error invalid-feedback"
+              [hidden]="!(resourceForm.controls.sigla.errors?.required && resourceForm.controls.sigla.touched)">
+              Campo 'Sigla'
+              Obrigatório</div>
+            <div class="error invalid-feedback"
+              [hidden]="!(resourceForm.controls.sigla.errors?.minlength && resourceForm.controls.sigla.touched)">
+              No mínimo 5 dígitos</div>
+
+          </div>
+          <div class="form-group col-sm-4 ui-fluid">
+            <div [ngClass]="{'text-danger': (resourceForm.controls.tipo.errors?.required && resourceForm.controls.tipo.touched)}">Tipo do Ativo*:<br/></div>
+            <p-dropdown  placeholder="Selecione uma opção"  [options]="tiposAtivo" formControlName="tipo" optionLabel="label" filter="true">
+
+            </p-dropdown>
+          </div>
+        </div>
+        <a routerLink="/ativos" type="submit" class="btn btn-lg btn-danger">Cancelar</a>
+        <button [disabled]="resourceForm.invalid || submittingForm" (click)="submitForm()" type="submit"
+          class="btn btn-lg float-right btn-success">Enviar</button>
+      </form>
+    </div>
+    <div class="overlay" *ngIf="loading">
+      <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+    </div>
+  </div>
+</div>
